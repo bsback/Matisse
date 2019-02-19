@@ -63,9 +63,28 @@ public class AlbumLoader extends CursorLoader {
     private static final String SELECTION_FOR_SINGLE_MEDIA_TYPE =
             MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
                     + " AND " + MediaStore.MediaColumns.SIZE + ">0"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + ") GROUP BY (bucket_id";
 
     private static String[] getSelectionArgsForSingleMediaType(int mediaType) {
+        return new String[]{String.valueOf(mediaType),
+                "%XiaoPeng%",
+                "%xiaopeng%",
+                "%xp2_temp%",
+                "%xp_temp%"};
+    }
+    // =============================================
+
+    // === params for showSingleMediaType: true ===
+    private static final String SELECTION_FOR_XIAOPENG =
+            MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
+                    + " AND " + MediaStore.MediaColumns.SIZE + ">0"
+                    + ") GROUP BY (bucket_id";
+
+    private static String[] getSelectionArgsForXiaoPeng(int mediaType) {
         return new String[]{String.valueOf(mediaType)};
     }
     // =============================================

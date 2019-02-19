@@ -68,7 +68,8 @@ public class AlbumMediaLoader extends CursorLoader {
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
-                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?";
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    +" AND " + MediaStore.MediaColumns.MIME_TYPE + "!='image/gif'";
 
     private static String[] getSelectionArgsForXiaoPeng(int mediaType) {
         return new String[]{String.valueOf(mediaType),
