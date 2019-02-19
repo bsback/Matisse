@@ -61,6 +61,22 @@ public class AlbumMediaLoader extends CursorLoader {
     private static String[] getSelectionArgsForSingleMediaType(int mediaType) {
         return new String[]{String.valueOf(mediaType)};
     }
+
+    private static final String SELECTION_ALL_FOR_XIAOPENG =
+            MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
+                    + " AND " + MediaStore.MediaColumns.SIZE + ">0"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?";
+
+    private static String[] getSelectionArgsForXiaoPeng(int mediaType) {
+        return new String[]{String.valueOf(mediaType),
+                "%XiaoPeng%",
+                "%xiaopeng%",
+                "%xp2_temp%",
+                "%xp_temp%"};
+    }
     // =========================================================
 
     // === params for ordinary album && showSingleMediaType: false ===
@@ -108,8 +124,10 @@ public class AlbumMediaLoader extends CursorLoader {
 
         if (album.isAll()) {
             if (SelectionSpec.getInstance().onlyShowImages()) {
-                selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
-                selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
+//                selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
+//                selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
+                selection = SELECTION_ALL_FOR_XIAOPENG;
+                selectionArgs = getSelectionArgsForXiaoPeng(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
             } else if (SelectionSpec.getInstance().onlyShowVideos()) {
                 selection = SELECTION_ALL_FOR_SINGLE_MEDIA_TYPE;
                 selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
