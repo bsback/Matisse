@@ -60,16 +60,17 @@ public class AlbumLoader extends CursorLoader {
     // =============================================
 
     // === params for showSingleMediaType: true ===
-    private static final String SELECTION_FOR_SINGLE_MEDIA_TYPE =
+    private static final String SELECTION_FOR_XIAOPENG =
             MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
                     + " AND " + MediaStore.MediaColumns.SIZE + ">0"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
                     + " AND " + MediaStore.Images.Media.DATA + " NOT LIKE ?"
+                    +" AND " + MediaStore.MediaColumns.MIME_TYPE + "!='image/gif'"
                     + ") GROUP BY (bucket_id";
 
-    private static String[] getSelectionArgsForSingleMediaType(int mediaType) {
+    private static String[] getSelectionArgsForXiaoPeng(int mediaType) {
         return new String[]{String.valueOf(mediaType),
                 "%XiaoPeng%",
                 "%xiaopeng%",
@@ -79,12 +80,12 @@ public class AlbumLoader extends CursorLoader {
     // =============================================
 
     // === params for showSingleMediaType: true ===
-    private static final String SELECTION_FOR_XIAOPENG =
+    private static final String SELECTION_FOR_SINGLE_MEDIA_TYPE =
             MediaStore.Files.FileColumns.MEDIA_TYPE + "=?"
                     + " AND " + MediaStore.MediaColumns.SIZE + ">0"
                     + ") GROUP BY (bucket_id";
 
-    private static String[] getSelectionArgsForXiaoPeng(int mediaType) {
+    private static String[] getSelectionArgsForSingleMediaType(int mediaType) {
         return new String[]{String.valueOf(mediaType)};
     }
     // =============================================
@@ -99,8 +100,10 @@ public class AlbumLoader extends CursorLoader {
         String selection;
         String[] selectionArgs;
         if (SelectionSpec.getInstance().onlyShowImages()) {
-            selection = SELECTION_FOR_SINGLE_MEDIA_TYPE;
-            selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
+//            selection = SELECTION_FOR_SINGLE_MEDIA_TYPE;
+//            selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
+            selection = SELECTION_FOR_XIAOPENG;
+            selectionArgs = getSelectionArgsForXiaoPeng(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE);
         } else if (SelectionSpec.getInstance().onlyShowVideos()) {
             selection = SELECTION_FOR_SINGLE_MEDIA_TYPE;
             selectionArgs = getSelectionArgsForSingleMediaType(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO);
